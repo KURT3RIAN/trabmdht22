@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MONITOR DHT22</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function updateData() {
+      $.getJSON('https://api.thingspeak.com/channels/2590047/feeds.json?api_key=DQOPCJTIX5K367M0&results=2', function(data) {
+        var feed = data.feeds[0];
+        $('#temperature').text(feed.field1);
+        $('#humidity').text(feed.field2);
+      });
+    }
+    setInterval(updateData, 2000);
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #fff; /* Fondo de la página en blanco */
+    }
+    h1 {
+      color: #333;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .box {
+      width: 200px;
+      padding: 20px;
+      margin: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      font-size: 18px;
+      color: #000; /* Color del texto en negro */
+      position: relative;
+    }
+    .temperature-box {
+      background: url('https://cdn-icons-png.flaticon.com/512/566/566675.png') no-repeat center center;
+      background-size: cover;
+    }
+    .humidity-box {
+      background: url('https://cdn-icons-png.flaticon.com/512/3262/3262966.png') no-repeat center center;
+      background-size: cover;
+    }
+    .box p {
+      background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente para mejorar la legibilidad del texto */
+      padding: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body onload="updateData()">
+  <h1>MONITOR DHT22</h1>
+  <div class="container">
+    <div class="box temperature-box">
+      <p>Temperature: <span id="temperature"></span> °C</p>
+    </div>
+    <div class="box humidity-box">
+      <p>Humidity: <span id="humidity"></span> %</p>
+    </div>
+  </div>
+</body>
+</html>
